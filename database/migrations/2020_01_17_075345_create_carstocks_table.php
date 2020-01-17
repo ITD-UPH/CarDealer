@@ -15,7 +15,7 @@ class CreateCarstocksTable extends Migration
     {
         Schema::create('carstocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('car_id');
+            $table->unsignedInteger('car_id')->unique();
             $table->unsignedMediumInteger('current_stock');
             $table->unsignedMediumInteger('sold_stock')->default(0);
             $table->unsignedMediumInteger('total_stock');
