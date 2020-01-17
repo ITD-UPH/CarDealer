@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'activation_code', 'active'
     ];
 
     /**
@@ -36,4 +36,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function activateAccount($code)
+    {
+        $user = User::where('activation_code', $code)->first();
+
+        if ($user) {
+            $user->update(['active' => 1, 'activation_code' => NULL]);
+            \Auth::login($user);
+            return true;
+        }
+    }
 }
